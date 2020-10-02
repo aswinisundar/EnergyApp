@@ -1,0 +1,9 @@
+{% extends "energy/base.html" %}
+{% block content %}
+    <h2>You have been logged out</h2>
+   <div class="border-top pt-5">
+       <small class="text-info" style="font-size:14px">
+            <a href="{% url 'login' %}">Click here to login again!</a>
+       </small>
+   </div>
+{% endblock content%}
