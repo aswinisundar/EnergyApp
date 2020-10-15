@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd&vaknz2&66-eeygcq(wb-tmelgp9&0+1xv(qo_gfkwmzzaczl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = not os.getenv('GAE_APPLICATION', None)
 
 ALLOWED_HOSTS = ['*']
 
@@ -85,7 +85,7 @@ if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/alien-topic-292307:australia-southeast1:energyapp',
+            'HOST': '/cloudsql/my-project-cloud-app:australia-southeast1:energyapp-instance',
             'USER': 'admin',
             'PASSWORD': 'test@123',
             'NAME': 'energyapp_django_db',
