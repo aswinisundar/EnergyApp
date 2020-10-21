@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import RegistrationForm
+from .models import User
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
@@ -43,6 +44,11 @@ def customer_logout(request):
 
 def home(request):
     return render(request,'energy/home.html')
+
+
+def dashboard(request):
+    login_user = User.objects.get(username=request.user)
+
 
 
 
