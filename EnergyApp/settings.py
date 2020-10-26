@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'energy.apps.EnergyConfig',
     'crispy_forms',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -99,14 +100,14 @@ else:
     #
     # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
-            'NAME': 'energyapp_django_db',
-            'USER': 'admin',
-            'PASSWORD': 'test@123',
-        }
+     #   'default': {
+     #       'ENGINE': 'django.db.backends.mysql',
+     #       'HOST': '127.0.0.1',
+     #       'PORT': '3306',
+     #       'NAME': 'energyapp_django_db',
+     #       'USER': 'admin',
+     #       'PASSWORD': 'test@123',
+     #   }
     }
 
 

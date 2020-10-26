@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{% static 'energy/main.css' %}">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <title>OurEnergyApp</title>
 </head>
@@ -28,7 +29,8 @@
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <a class="nav-item nav-link" href="#">Dashboard</a>
+              <a class="nav-item nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              <a class="nav-item nav-link" href="#">Profile</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
             </div>
         </div>

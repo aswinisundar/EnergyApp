@@ -23,11 +23,13 @@ def gcp2df(sql):
 
 
 
+
 query = """
-    SELECT *
-FROM `my-project-cloud-app.consumption.Consumption2` 
-LIMIT 100
-"""
+    SELECT Date, Client_ID, sum(Usage),
+    FROM `my-project-cloud-app.consumption.Consumption2` where Client_ID=420321 and Date>= '2020-09-01' and Date <= '2020-09-01'
+    group by Date, Client_ID 
+    LIMIT 2000
+    """
 print(gcp2df(query))
 
 '''
