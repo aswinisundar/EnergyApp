@@ -22,24 +22,6 @@ client = bigquery.Client(project=gcp_project)
 dataset_ref = client.dataset(bq_dataset)
 
 # results to dataframe function
-def gcp2df(sql,client_id,start_date,end_date):
-    print("Start date {}".format(start_date))
-    query_config = bigquery.QueryJobConfig(
-        query_parameters=[
-            bigquery.ScalarQueryParameter('limit', 'INTEGER', 100),
-            bigquery.ScalarQueryParameter('client_id', 'INTEGER', client_id)
-            #bigquery.ScalarQueryParameter('startdate', 'DATE', start_date)
-            #bigquery.ScalarQueryParameter('enddate', 'DATETIME', end_date.date)
-        ]
-    )
-    query = client.query(sql,job_config=query_config)
-
-    results = query.result()
-    energyMonthlyUsages=[]
-    for f in results:
-        print(f)
-        energyMonthlyUsages.append( energyMonthlyUsage(f[0],f[2]))
-    return energyMonthlyUsages
 
 def gcp2df1(sql,client_id,year,month):
     query_config = bigquery.QueryJobConfig(
@@ -66,7 +48,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'Account created successfully')
-            return redirect('home')
+            return redirect('login')
     else:
         form = RegistrationForm()
     return render(request,'energy/register.html',{'form':form})
@@ -105,33 +87,35 @@ def dashboard(request):
 
 
 def usage_data(request,year,month):
-    client_id=420321
+    login_user = User.objects.get(username=request.user)
+    #print(login_user.username)
+    client_id=login_user.username
     #year=2020
     #month=10
-    print("Year {}".format(year))
-    start_date = datetime.datetime(year,month,1)
-    next_month = start_date.replace(day=28) + datetime.timedelta(days=4)
-    # Subtract all days that are over since the start of the month.
-    last_day_of_month = next_month - datetime.timedelta(days=next_month.day)
-    end_date=last_day_of_month
-    print(start_date)
+    #print("Year {}".format(year))
+
     query = """
         SELECT Date, Client_ID, sum(Usage),
         FROM `my-project-cloud-app.consumption.Consumption2` where Client_ID=@client_id and EXTRACT(YEAR FROM Date)= @year and EXTRACT(MONTH FROM Date)= @month
         group by Date, Client_ID 
+        order by Date 
         LIMIT @limit
         """
     dataframe=gcp2df1(query,client_id,year,month)
     #print(type(dataframe.Date.tolist()))
     data = []
     labels = []
+    total = 0
     for d in dataframe:
         labels.append(d.dayOfMonth)
         data.append(d.usage)
+        total = total + d.usage
 
     return JsonResponse(data={
         'labels':labels,
         'data': data,
+        'total': total,
+        'title':datetime.datetime(year,month,1).strftime("%B %Y")
     })
 
 

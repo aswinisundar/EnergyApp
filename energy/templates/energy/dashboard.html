@@ -2,21 +2,32 @@
 
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <div>
+    <input type="text" id="year" value="2020" />
+    <input type="text" id="month" value="10" />
+        <button value="Generate"  onclick="generateGraph()">Generate</button>
+    </div>
+    <br>
+    <br>
   <div id="container" style="width: 75%;">
     <canvas id="usage_data" data-url="{% url 'usage_data'%}"></canvas>
   </div>
+    <br>
+<label id="lbl_total"></label>
 
 
 
   <script>
-
-    $(function () {
-        //alert("hai")
+    function generateGraph()
+    {
       var $usageData = $("#usage_data");
-      $.ajax({
-        url: $usageData.data("url")+"2020/10",
-        success: function (data) {
 
+      var urlParams=$("#year").val() + "/" + $("#month").val();
+      $.ajax({
+        url: $usageData.data("url")+urlParams,
+        success: function (data) {
+            //alert(data.total);
+            $("#lbl_total").text("Total consumption for the Month of " + data.title + " is " + data.total + "KwH");
           var ctx = $usageData[0].getContext("2d");
 
           new Chart(ctx, {
@@ -24,25 +35,42 @@
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Daily Usage',
-                backgroundColor: 'blue',
+                label: 'Daily Usage in KwH',
+                backgroundColor: 'darkblue',
                 data: data.data
               }]
             },
             options: {
-              responsive: true,
-              legend: {
-                position: 'top',
-              },
-              title: {
-                display: true,
-                text: 'Data Usage Chart - Oct 2020'
-              }
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Energy Usage Chart - ' + data.title
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Energy in KwH'
+                        }
+                    }],
+                xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Days'
+                        }
+                    }]
+                }
             }
           });
-
         }
       });
+    }
+    $(function () {
+        //alert("hai")
+        generateGraph();
 
     });
 
