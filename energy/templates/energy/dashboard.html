@@ -27,7 +27,7 @@
         url: $usageData.data("url")+urlParams,
         success: function (data) {
             //alert(data.total);
-            $("#lbl_total").text("Total consumption for the Month of " + data.title + " is " + data.total + "KwH");
+            $("#lbl_total").text("Total consumption for the Month of " + data.title + " is " + data.total + " KwH ");
           var ctx = $usageData[0].getContext("2d");
 
           new Chart(ctx, {

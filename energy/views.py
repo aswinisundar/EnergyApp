@@ -14,7 +14,7 @@ from google.cloud import bigquery
 gcp_project = 'my-project-cloud-app'
 bq_dataset = 'consumption'
 
-credential_path = "C:\Aswini\Cloud application design and development\EnergyApp\my-project-cloud-app-b2076257f9d0.json"
+credential_path = "my-project-cloud-app-b2076257f9d0.json"
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 
 # connections
@@ -110,7 +110,8 @@ def usage_data(request,year,month):
         labels.append(d.dayOfMonth)
         data.append(d.usage)
         total = total + d.usage
-
+        total = round(total, 2)
+        #print(f'Total consumption{total:.2f}')
     return JsonResponse(data={
         'labels':labels,
         'data': data,
