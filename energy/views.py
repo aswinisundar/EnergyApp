@@ -21,8 +21,8 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = credential_path
 client = bigquery.Client(project=gcp_project)
 dataset_ref = client.dataset(bq_dataset)
 
-# results to dataframe function
 
+# results to dataframe function
 def gcp2df1(sql,client_id,year,month):
     query_config = bigquery.QueryJobConfig(
         query_parameters=[

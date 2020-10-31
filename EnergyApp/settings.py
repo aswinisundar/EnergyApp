@@ -86,8 +86,8 @@ if os.getenv('GAE_APPLICATION', None):
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/my-project-cloud-app:australia-southeast1:energyapp-instance',
-            'USER': 'admin',
-            'PASSWORD': 'test@123',
+            'USER': '',
+            'PASSWORD': '',
             'NAME': 'energyapp_django_db',
         }
     }
@@ -104,8 +104,8 @@ else:
            'HOST': '127.0.0.1',
            'PORT': '3306',
            'NAME': 'energyapp_django_db',
-           'USER': 'admin',
-           'PASSWORD': 'test@123',
+           'USER': '',
+           'PASSWORD': '',
        }
     }
 
